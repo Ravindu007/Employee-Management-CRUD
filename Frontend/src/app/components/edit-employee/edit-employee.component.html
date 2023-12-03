@@ -21,5 +21,6 @@
       <input type="text" class="form-control" name="phone" [(ngModel)] = "employeeDetails.phone">
     </div>
     <button class="btn btn-primary tw-mt-2">Save</button>
+    <button (click)="deleteEmployee(employeeDetails.id)" class="btn btn-danger tw-mt-2 tw-ml-2">Delete</button>
   </form>
 </div>

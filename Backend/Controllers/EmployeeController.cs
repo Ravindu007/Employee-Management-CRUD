@@ -32,7 +32,7 @@ namespace Backend.Controllers
         {
             var employee = await _dbcontext.Employees.FirstOrDefaultAsync(x => x.Id == id);
 
-            if(employee == null)
+            if (employee == null)
             {
                 return NotFound();
             }
@@ -70,6 +70,25 @@ namespace Backend.Controllers
 
             await _dbcontext.SaveChangesAsync();
             return Ok(employee);
+        }
+
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteEmployee([FromRoute] Guid id)
+        {
+            var employee = await _dbcontext.Employees.FindAsync(id);
+
+            if(employee == null)
+            {
+                return NotFound();
+            }
+
+            _dbcontext.Employees.Remove(employee);
+            await _dbcontext.SaveChangesAsync();
+
+            return Ok();
+
         }
     }
 }
