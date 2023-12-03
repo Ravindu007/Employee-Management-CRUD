@@ -25,6 +25,21 @@ namespace Backend.Controllers
             return Ok(employees);
         }
 
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetSingleEmployee([FromRoute] Guid id)
+        {
+            var employee = await _dbcontext.Employees.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(employee == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(employee);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateEmployee([FromBody] Employee employeeRequest)
         {
