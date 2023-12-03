@@ -49,5 +49,27 @@ namespace Backend.Controllers
 
             return Ok(employeeRequest);
         }
+
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateEmployee([FromRoute] Guid id, Employee updateEmployeeRequest)
+        {
+            var employee = await _dbcontext.Employees.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            employee.Name = updateEmployeeRequest.Name;
+            employee.Role = updateEmployeeRequest.Role;
+            employee.Department = updateEmployeeRequest.Department;
+            employee.Email = updateEmployeeRequest.Email;
+            employee.Phone = updateEmployeeRequest.Phone;
+
+            await _dbcontext.SaveChangesAsync();
+            return Ok(employee);
+        }
     }
 }
